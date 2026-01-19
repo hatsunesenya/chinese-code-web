@@ -1,80 +1,93 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>中文电码转换器</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2563eb">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中文电码转换器</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
 </head>
 <body>
 
-<header class="app-header">
-  <h1>中文电码转换器</h1>
-  <button class="about-btn" onclick="openAbout()">关于 / About</button>
-</header>
+    <header class="app-header">
+        <h1>中文电码转换器</h1>
+        <button class="about-btn" onclick="openAbout()">关于 / About</button>
+        <button id="install-btn" class="about-btn">安装到本地</button>
+    </header>
 
-<main class="container">
-  <textarea id="inputText" placeholder="请输入汉字或电码（如：北京 或 1722 0220）"></textarea>
+    <main class="container">
+        <textarea id="inputText" placeholder="请输入汉字或电码（如：北京 或 1722 0220）"></textarea>
 
-  <div class="buttons">
-    <button onclick="hanziToCode()">汉字 → 电码</button>
-    <button onclick="codeToHanzi()">电码 → 汉字</button>
-  </div>
+        <div class="buttons">
+            <button onclick="hanziToCode()">汉字 → 电码</button>
+            <button onclick="codeToHanzi()">电码 → 汉字</button>
+            <button onclick="importTxt()">导入 TXT</button>
+            <button onclick="exportTxt()">导出 TXT</button>
+        </div>
 
-  <textarea id="outputText" placeholder="转换结果"></textarea>
-</main>
+        <textarea id="outputText" placeholder="转换结果"></textarea>
+        <input type="file" id="fileInput" accept=".txt" style="display:none">
+    </main>
 
-<!-- About 弹窗 -->
-<div id="about-overlay" class="overlay hidden">
-  <div class="about-modal">
-    <h2>关于本软件</h2>
+    <!-- About 弹窗 -->
+    <div id="about-overlay" class="overlay hidden">
+        <div class="about-modal">
+            <h2>关于本软件</h2>
+            <section>
+                <strong>软件名称：</strong><br>
+                中文电码转换器（Chinese Telegraph Code Converter）
+            </section>
+            <section>
+                <strong>功能简介：</strong><br>
+                本工具用于实现中文汉字与中文电码（参考中国大陆 1983 版电码表）的相互转换，
+                适用于业余无线电（HAM）交流、学习与研究用途。
+            </section>
+            <section>
+                <strong>作者与版权：</strong><br>
+                作者 / 维护者：BD8DQS<br>
+                首次发布：2025 年
+            </section>
+            <section>
+                <strong>AI 辅助声明：</strong><br>
+                本软件在开发过程中部分使用人工智能工具作为辅助，
+                所有功能逻辑与发布内容均由作者人工审核确认。
+            </section>
+            <section>
+                <strong>开源说明：</strong><br>
+                本项目基于 MIT License 开源发布。<br>
+                允许自由使用、修改与再发布，但需保留原作者署名与协议文本。
+            </section>
+            <section>
+                <strong>免责声明：</strong><br>
+                本软件仅用于技术交流与学习目的，不对转换结果的完整性或准确性作出保证。
+            </section>
+            <button class="close-btn" onclick="closeAbout()">关闭</button>
+        </div>
+    </div>
 
-    <section>
-      <strong>软件名称：</strong><br>
-      中文电码转换器（Chinese Telegraph Code Converter）
-    </section>
+    <!-- 安装提示弹窗 -->
+    <div id="install-overlay" class="overlay hidden">
+        <div class="about-modal">
+            <h2>安装到本地</h2>
+            <section>
+                本应用支持下载安装到本地使用（PWA），安装后可在无网络环境下正常运行，
+                并以独立应用形式启动。
+            </section>
+            <section>是否现在安装？</section>
+            <div class="buttons">
+                <button onclick="installApp()">安装</button>
+                <button class="about-btn" onclick="closeInstall()">暂不</button>
+            </div>
+        </div>
+    </div>
 
-    <section>
-      <strong>功能简介：</strong><br>
-      本工具用于实现中文汉字与中文电码（参考中国大陆 1983 版电码表）的相互转换，
-      适用于业余无线电（HAM）交流、学习与研究用途。
-    </section>
+    <script src="logic.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+    </script>
 
-    <section>
-      <strong>作者与版权：</strong><br>
-      作者 / 维护者：BD8DQS<br>
-      首次发布：2026 年 1 月 19 日
-    </section>
-
-    <section>
-      <strong>AI 辅助声明：</strong><br>
-      本软件在开发过程中部分使用人工智能工具作为辅助，
-      所有功能逻辑与发布内容均由作者人工审核确认。
-    </section>
-
-    <section>
-      <strong>开源说明：</strong><br>
-      本项目基于 MIT License 开源发布。<br>
-      允许自由使用、修改与再发布，但需保留原作者署名与协议文本。
-    </section>
-
-    <section>
-      <strong>免责声明：</strong><br>
-      本软件仅用于技术交流与学习目的，不对转换结果的完整性或准确性作出保证。
-    </section>
-
-    <button class="close-btn" onclick="closeAbout()">关闭</button>
-  </div>
-</div>
-
-<script src="logic.js"></script>
-<script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
-  }
-</script>
 </body>
 </html>

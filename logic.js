@@ -1,4 +1,4 @@
-// 电码表
+// ===== 电码表 =====
 const CODEBOOK = {
     '一': '0001',
     '丁': '0002',
@@ -7078,55 +7078,80 @@ const CODEBOOK = {
     '鹴': '9684',
     '麸': '9690',
     '黟': '9694'
-};
-
-// 反向表
+ };
 const REVERSE_CODEBOOK = {};
-for (const k in CODEBOOK) {
-  REVERSE_CODEBOOK[CODEBOOK[k]] = k;
-}
+for (const k in CODEBOOK) REVERSE_CODEBOOK[CODEBOOK[k]] = k;
 
-// 汉字 → 电码
+// ===== 汉字 → 电码 =====
 function hanziToCode() {
-  const input = document.getElementById("inputText").value;
-  let result = [];
-
-  for (const ch of input) {
-    if (CODEBOOK[ch]) {
-      result.push(`${ch} ${CODEBOOK[ch]}`);
-    } else if (/\s/.test(ch)) {
-      result.push(ch);
-    } else {
-      result.push(`${ch} ????`);
+    const input = document.getElementById("inputText").value;
+    let result = [];
+    for (const ch of input) {
+        if (CODEBOOK[ch]) result.push(`${ch} ${CODEBOOK[ch]}`);
+        else if (/\s/.test(ch)) result.push(ch);
+        else result.push(`${ch} ????`);
     }
-  }
-
-  document.getElementById("outputText").value = result.join(" ");
+    document.getElementById("outputText").value = result.join(" ");
 }
 
-// 电码 → 汉字
+// ===== 电码 → 汉字 =====
 function codeToHanzi() {
-  const input = document.getElementById("inputText").value.trim().split(/\s+/);
-  let result = [];
-
-  for (const item of input) {
-    if (REVERSE_CODEBOOK[item]) {
-      result.push(`${item} ${REVERSE_CODEBOOK[item]}`);
-    } else if (/^\d{4}$/.test(item)) {
-      result.push(`${item} <UNK>`);
-    } else {
-      result.push(item);
+    const input = document.getElementById("inputText").value.trim().split(/\s+/);
+    let result = [];
+    for (const item of input) {
+        if (REVERSE_CODEBOOK[item]) result.push(`${item} ${REVERSE_CODEBOOK[item]}`);
+        else if (/^\d{4}$/.test(item)) result.push(`${item} <UNK>`);
+        else result.push(item);
     }
-  }
-
-  document.getElementById("outputText").value = result.join(" ");
+    document.getElementById("outputText").value = result.join(" ");
 }
 
-// About 控制
-function openAbout() {
-  document.getElementById("about-overlay").classList.remove("hidden");
+// ===== TXT 导入 =====
+function importTxt() { document.getElementById("fileInput").click(); }
+document.getElementById("fileInput").addEventListener("change", function () {
+    const file = this.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function (e) { document.getElementById("inputText").value = e.target.result; };
+    reader.readAsText(file, "utf-8");
+});
+
+// ===== TXT 导出 =====
+function exportTxt() {
+    const content = document.getElementById("outputText").value;
+    if (!content) { alert("当前没有可导出的内容。"); return; }
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "conversion_result.txt"; a.click();
+    URL.revokeObjectURL(url);
 }
 
-function closeAbout() {
-  document.getElementById("about-overlay").classList.add("hidden");
+// ===== About 弹窗 =====
+function openAbout() { document.getElementById("about-overlay").classList.remove("hidden"); }
+function closeAbout() { document.getElementById("about-overlay").classList.add("hidden"); }
+
+// ===== PWA 安装提示 =====
+let deferredPrompt = null;
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault(); deferredPrompt = e;
+    if (!localStorage.getItem("pwa-install-dismissed")) document.getElementById("install-overlay").classList.remove("hidden");
+    const installBtn = document.getElementById("install-btn");
+    if (installBtn) installBtn.style.display = "inline-block";
+});
+
+function installApp() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.finally(() => { deferredPrompt = null; closeInstall(); });
 }
+
+function closeInstall() {
+    document.getElementById("install-overlay").classList.add("hidden");
+    localStorage.setItem("pwa-install-dismissed", "true");
+}
+
+// ===== 用户随时点击按钮安装 =====
+document.getElementById("install-btn").addEventListener("click", () => {
+    if (!deferredPrompt) { alert("当前浏览器不支持 PWA 安装或已安装。"); return; }
+    installApp();
+});
