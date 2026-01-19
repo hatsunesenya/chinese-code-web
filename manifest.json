@@ -1,0 +1,21 @@
+{
+  "name": "中文电码转换器",
+  "short_name": "中文电码",
+  "description": "中文汉字与中文电码（1983）相互转换工具",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f1f5f9",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
