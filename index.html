@@ -11,7 +11,7 @@
 <body>
 
     <header class="app-header">
-        <h1 >电码转换器</h1>
+        <h1 >中文电码转换器</h1>
     </header>
 
     <main class="container">
@@ -87,12 +87,13 @@
             <h2>关于本软件</h2>
             <section>
                 <strong>软件名称：</strong><br>
-                中文电码转换器（Chinese Telegraph Code Converter）
+                中文电码转换器（Chinese Telegraph Code Converter）<br>
+                仓库：<a href="https://github.com/hydroge/chinese-telegraph-convert" target="_blank">github.com/hydroge/chinese-telegraph-convert</a>
             </section>
             <section>
                 <strong>功能简介：</strong><br>
                 本工具用于实现中文汉字与中文电码（参考中国大陆 1983 版电码表）的相互转换，
-                适用于业余无线电（HAM）交流、学习与研究用途。
+                适用于业余无线电（HAM）交流、学习与研究用途。<br>
                 也可用于《覆雪之下》第四季的电码加密与解码。    
             </section>
             <section>
@@ -137,7 +138,7 @@
         </div>
     </div>
 
-    <script src="logic.js"></script>
+    <script type="module" src="logic.js"></script>
     <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("service-worker.js");
