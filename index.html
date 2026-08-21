@@ -11,23 +11,74 @@
 <body>
 
     <header class="app-header">
-        <h1>中文电码转换器</h1>
-        <button class="about-btn" onclick="openAbout()">关于 / About</button>
-        <button id="install-btn" class="about-btn">安装到本地</button>
+        <h1 >电码转换器</h1>
     </header>
 
     <main class="container">
-        <textarea id="inputText" placeholder="请输入汉字或电码（如：北京 或 1722 0220）"></textarea>
+        <div class="mode-switch">
+            <span class="mode-label">学习模式？</span>
+            <button id="modeToggle" class="mode-toggle" onclick="toggleMode()" aria-pressed="false">
+                <span class="mode-track">
+                    <span class="mode-thumb"></span>
+                    <span class="mode-text mode-text-fast"></span>
+                    <span class="mode-text mode-text-learn"></span>
+                </span>
+            </button>
+            </div>
+            <center><span id="modeHint" class="mode-hint">仅输出转换结果</span></center>
+        </div>
 
-        <div class="buttons">
-            <button onclick="hanziToCode()">汉字 → 电码</button>
-            <button onclick="codeToHanzi()">电码 → 汉字</button>
-            <button onclick="importTxt()">导入 TXT</button>
-            <button onclick="exportTxt()">导出 TXT</button>
+        <textarea id="inputText" placeholder="请输入汉字或电码，常规模式下可直接连续输入数字（例如：00220948）；学习模式下每个汉字的电码均需空格隔开（例如：0022 0948）。"></textarea>
+
+        <div class="action-group">
+            <p class="group-label">常规转换</p>
+            <div class="buttons">
+                <button onclick="hanziToCode()">汉字 → 电码</button>
+                <button onclick="codeToHanzi()">电码 → 汉字</button>
+            </div>
+        </div>
+
+        <div class="action-group">
+            <p class="group-label">自动粘贴原文并一键复制转换结果</p>
+            <div class="buttons">
+                <button onclick="hanziToCodeAuto()">汉字 → 电码（自动）</button>
+                <button onclick="codeToHanziAuto()">电码 → 汉字（自动）</button>
+            </div>
+        </div>
+
+        <div class="action-group">
+            <p class="group-label">复制和粘贴</p>
+            <div class="buttons">
+                <button onclick="copyResult()">复制翻译结果</button>
+                <button onclick="pasteToInput()">粘贴到输入框</button>
+            </div>
+        </div>
+        <div class="action-group">
+            <p class="group-label">复制和粘贴</p>
+            <div class="buttons">
+                <button onclick="emptyInOut()">清空输入框和输出框</button>
+                
+            </div>
+        </div>
+
+        <div class="action-group">
+            <p class="group-label">文件操作</p>
+            <div class="buttons">
+                <button onclick="importTxt()">导入 TXT</button>
+                <button onclick="exportTxt()">导出 TXT</button>
+            </div>
         </div>
 
         <textarea id="outputText" placeholder="转换结果"></textarea>
         <input type="file" id="fileInput" accept=".txt" style="display:none">
+
+        <div class="action-group">
+            <div class="buttons">
+                <button class="about-btn" onclick="openAbout()">关于 / About</button>
+                <button id="install-btn" class="about-btn">安装到本地</button>
+            </div>
+        </div>
+        
     </main>
 
     <!-- About 弹窗 -->
@@ -42,11 +93,15 @@
                 <strong>功能简介：</strong><br>
                 本工具用于实现中文汉字与中文电码（参考中国大陆 1983 版电码表）的相互转换，
                 适用于业余无线电（HAM）交流、学习与研究用途。
+                也可用于《覆雪之下》第四季的电码加密与解码。    
             </section>
             <section>
                 <strong>作者与版权：</strong><br>
-                作者 / 维护者：BD8DQS<br>
-                首次发布：2026 年
+                原作者：BD8DQS<br>
+                首次发布：20260119<br>
+                改编者：淬火仙人掌（Cactus Trempé）<br>
+                改版：20260821
+
             </section>
             <section>
                 <strong>AI 辅助声明：</strong><br>

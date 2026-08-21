@@ -4,9 +4,15 @@ Chinese Telegraph Code Converter (CTC-1983)
 一个用于 **中文汉字 ↔ 中文电码（中国大陆 1983 版）** 相互转换的工具，  
 面向业余无线电（HAM）交流、学习与研究用途。
 
+原网址链接：https://www.orcy.net/chinese-code-web/
+
+原仓库链接：https://github.com/hatsunesenya/chinese-code-web
+
 ---
 
 ## ✨ 功能特性
+
+**原有特性**
 
 - 汉字 → 中文电码（四位数字）
 - 中文电码 → 汉字
@@ -16,11 +22,17 @@ Chinese Telegraph Code Converter (CTC-1983)
 - 支持 PWA（可安装、可离线使用）
 - 无需后端，纯前端实现
 
+**新增特性**
+
+- 大范围、快速转换电码
+- 快速复制与粘贴功能
+- 可在快速模式与学习模式之间转换
+
 ---
 
 ## 🖥️ 在线使用
 
-项目已部署为 Web 应用，可直接访问
+网站项目已部署为 Web 应用，可直接访问。
 
 支持浏览器直接使用，安卓与桌面端可安装为应用。
 
@@ -62,7 +74,7 @@ Chinese Telegraph Code Converter (CTC-1983)
 
 ## 📜 开源协议
 
-本项目以 **MIT License** 形式开源发布。
+按照原作者要求，本项目遵守 **MIT License** 形式开源发布。
 
 你可以：
 
@@ -90,5 +102,5 @@ Chinese Telegraph Code Converter (CTC-1983)
 
 - 呼号：BD8DQS
 - 性质：非商业、公益项目
-
+- 改版作者：淬火仙人掌（Cactus Trempé）
 
