@@ -11,18 +11,99 @@ body {
 
 .app-header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 8px;
     padding: 12px 16px;
     background: #2563eb;
     color: white;
+    height: 60px;
 }
 
 .container {
     max-width: 900px;
     margin: 20px auto;
     padding: 0 16px;
+}
+
+.mode-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.mode-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.mode-toggle {
+    position: relative;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: auto;
+}
+
+.mode-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 88px;
+    height: 30px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #cbd5e1;
+    transition: background 0.2s ease;
+}
+
+.mode-toggle.is-learn .mode-track {
+    background: #2563eb;
+}
+
+.mode-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #f8fafc;
+    z-index: 2;
+    user-select: none;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+}
+
+.mode-toggle:not(.is-learn) .mode-text-fast {
+    opacity: 1;
+}
+
+.mode-toggle.is-learn .mode-text-learn {
+    opacity: 1;
+}
+
+.mode-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
+    z-index: 1;
+}
+
+.mode-toggle.is-learn .mode-thumb {
+    transform: translateX(58px);
+}
+
+.mode-hint {
+    font-size: 12px;
+    color: #64748b;
 }
 
 textarea {
@@ -35,14 +116,30 @@ textarea {
     resize: vertical;
 }
 
+.action-group {
+    margin: 12px 0;
+    width: 100%;
+}
+
+.group-label {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+}
+
 .buttons {
     display: flex;
+    justify-content: center;
     gap: 12px;
     margin: 12px 0;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 button {
+    width: 150px;
     padding: 8px 16px;
     border-radius: 6px;
     border: none;
@@ -50,10 +147,6 @@ button {
     color: white;
     cursor: pointer;
 }
-
-    button:hover {
-        background: #1d4ed8;
-    }
 
 .about-btn {
     background: #f8fafc;
